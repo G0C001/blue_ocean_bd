@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Prism.js CSS for syntax highlighting -->
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" rel="stylesheet" />
+
+    <!-- Prism.js JS for functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.js"></script>
+  
+    <!-- Add Prism plugin for JSON syntax highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+</head>
+
+<body class="flex h-screen">
+
+
+  <!-- Navbar -->
+  <!-- Navbar -->
+  <div class="w-1/5 bg-gray-800 text-white flex flex-col py-5">
+    <a href="javascript:void(0)" onclick="showContainer('homeContainer')"
+      class="flex items-center p-4 hover:bg-gray-700 rounded-lg transition ease-in-out duration-200">
+      <i class="bi bi-person-circle mr-3 text-xl"></i>
+      <span class="text-lg font-semibold tracking-wide">HOME</span>
+    </a>
+    <a href="javascript:void(0)" onclick="showContainer('dbContainer')"
+      class="flex items-center p-4 hover:bg-gray-700 rounded-lg transition ease-in-out duration-200">
+      <i class="bi bi-database-add mr-3 text-xl"></i>
+      <span class="text-lg font-semibold tracking-wide">DATABASE</span>
+    </a>
+    <a href="javascript:void(0)" onclick="showContainer('cloudContainer')"
+      class="flex items-center p-4 hover:bg-gray-700 rounded-lg transition ease-in-out duration-200">
+      <i class="bi bi-cloud-arrow-down-fill mr-3 text-xl"></i>
+      <span class="text-lg font-semibold tracking-wide">CLOUD</span>
+    </a>
+    <a href="javascript:void(0)" onclick="showContainer('apiContainer')"
+      class="flex items-center p-4 hover:bg-gray-700 rounded-lg transition ease-in-out duration-200">
+      <i class="bi bi-robot mr-3 text-xl"></i>
+      <span class="text-lg font-semibold tracking-wide">API</span>
+    </a>
+  </div>
+
+
+  <!-- Content -->
+  <div class="w-4/5 p-6 overflow-y-auto">
+    <!-- Home Container -->
+
+
+
+    <!-- Home Container -->
+    <div id="homeContainer" class="container hidden">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b-2 border-gray-200 pb-2">
+        Profile
+      </h2>
+
+
+      <!-- Profile Card -->
+      <div class="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden p-6">
+        <!-- Avatar and Name -->
+        <div class="flex items-center mb-4">
+          <img src="{% static 'images/avator.png' %}" alt="User Avatar" class="w-20 h-20 rounded-full border-2 border-blue-500 mr-4" />
+          <div>
+            <h3 class="text-xl font-semibold text-gray-700">John Doe</h3>
+            <p class="text-sm text-gray-500">Software Engineer</p>
+          </div>
+        </div>
+
+        <!-- Database Count -->
+        <div class="flex items-center gap-2 text-gray-700 mb-4">
+          <i class="bi bi-database-fill text-blue-500"></i>
+          <span class="font-semibold">Databases Managed:</span>
+          <span id="dbCount" class="text-gray-800 font-bold">5</span>
+        </div>
+
+        <!-- Options Section -->
+        <div class="mt-4">
+          <ul class="space-y-2">
+
+            <li>
+              <a href="#" class="flex items-center px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200">
+                <i class="bi bi-box-arrow-right mr-2"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Database Container -->
+    <div id="dbContainer" class="container hidden h-full flex flex-col">
+      <!-- Modal Overlay -->
+      <div id="modalOverlay"
+        class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96 max-w-md text-center">
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Create New Database</h2>
+          <input id="userInput" type="text" placeholder="Enter database name..."
+            class="w-full p-3 border border-gray-300 rounded-md mb-4">
+          <div class="flex justify-between">
+            <button id="closeModalBtn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Close</button>
+            <button id="createBtn" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Create</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add New Database Button -->
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b-2 border-gray-200 pb-2">
+        <i class="bi bi-database"></i> Database
+      </h2>
+
+      <div class="mb-6">
+        <button id="openModalBtn"
+          class="px-4 py-2 bg-blue-500 text-white rounded flex items-center gap-2 hover:bg-blue-600 font-bold tracking-wide">
+          <i class="bi bi-database-fill-add"></i> Add Database
+        </button>
+      </div>
+
+      <!-- Database List -->
+      <div id="databaseList" class="flex-grow overflow-y-auto space-y-4 bg-gray-900 p-4 rounded-lg shadow-inner">
+        <!-- Example Database Card (dynamically added) -->
+        <!-- Each database card will have the following structure: -->
+      </div>
+    </div>
+
+    <!-- Cloud Container -->
+    <div id="cloudContainer" class="container hidden">
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b-2 border-gray-200 pb-2">Cloud</h2>
+      <p>This is the Cloud section.</p>
+    </div>
+
+
+    <!-- API Container -->
+    <div id="apiContainer" class="container hidden h-full flex flex-col">
+      <!-- Section Header -->
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b-2 border-gray-200 pb-2">API</h2>
+
+      <!-- Add New API Button -->
+      <div class="mb-6">
+        <button id="addApiBtn"
+          class="px-4 py-2 bg-blue-500 text-white rounded flex items-center gap-2 hover:bg-blue-600 font-bold tracking-wide">
+          <i class="bi bi-plus-circle-fill"></i> New API
+        </button>
+      </div>
+
+      <!-- API List Container (Scrollable) -->
+      <div id="apiList" class="flex-grow overflow-y-auto space-y-4 bg-gray-900 p-4 rounded-lg shadow-inner">
+        <!-- Example API Card -->
+
+      </div>
+    </div>
+
+<!-- Modal -->
+<div id="apiModal" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 hidden">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+    <!-- Close Button -->
+    <button onclick="closeApiModal()" class="absolute top-2 right-2 text-gray-600">
+      <i class="bi bi-x-circle-fill text-2xl"></i>
+    </button>
+
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">API Token</h2>
+
+    <!-- Dynamic API Token Content -->
+    <div class="bg-gray-100 rounded-md text-gray-700">
+      <pre class="language-json text-sm font-mono">
+        <code id="apiTokenCode" class="language-json">
+
+        </code>
+      </pre>
+    </div>
+
+    <!-- Copy Button -->
+    <button onclick="copyToClipboard()" class="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+      Copy URL
+    </button>
+  </div>
+</div>
+
+
+
+
+
+  </div>
+  <script>
+    var user = "{{ user|escapejs }}"
+    window.user
+  </script>
+  <script src="{% static 'js/home_container.js' %}"></script>
+  <script src="{% static 'js/home_add_db.js' %}"></script>
+  <script src="{% static 'js/home_delete_db.js' %}"></script>
+  <script src="{% static 'js/home_api_db.js' %}"></script>
+  </body>
+  
+  
+  </html>

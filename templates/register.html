@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <title>REGISTER</title>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  <style>
+    .form-container .inputBox input {
+      width: 320px;
+    }
+  </style>
+
+</head>
+
+ <body> 
+
+  <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
+
+<!-- Login Form -->
+<div id="login-form" class="form-container active">
+  <h2>Login</h2>
+  <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    <div class="form">
+      <input type="hidden" name="action" value="login" style="width: 700px;">
+      <div class="inputBox">
+        <input type="text" name="username" required>
+        <i>Username</i>
+      </div>
+      <div class="inputBox">
+        <input type="password" name="password" required>
+        <i>Password</i>
+      </div>
+      <div class="links">
+        <a href="#">Forgot Password</a>
+        <a href="#" onclick="toggleForms('signup')">Signup</a>
+      </div>
+      <div class="inputBox">
+        <input type="submit" value="Login">
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Signup Form -->
+<div id="signup-form" class="form-container">
+  <h2>Signup</h2>
+  <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    <div class="form">
+      <input type="hidden" name="action" value="signup">
+      <div class="inputBox">
+        <input type="text" name="username" required>
+        <i>Username</i>
+      </div>
+      <div class="inputBox">
+        <input type="email" name="email" required>
+        <i>Email</i>
+      </div>
+      <div class="inputBox">
+        <input type="password" name="password" required>
+        <i>Password</i>
+      </div>
+      <div class="links">
+        <a href="#" onclick="toggleForms('login')">Login</a>
+      </div>
+      <div class="inputBox">
+        <input type="submit" value="Signup">
+      </div>
+    </div>
+  </form>
+</div>
+
+
+  </section> 
+  <script>
+    function toggleForms(form) {
+      document.getElementById('login-form').classList.remove('active');
+      document.getElementById('signup-form').classList.remove('active');
+      document.getElementById(`${form}-form`).classList.add('active');
+    }
+  </script>
+  
+</body>
+</html>
