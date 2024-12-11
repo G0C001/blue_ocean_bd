@@ -6,9 +6,10 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 
-
-load_dotenv()
-TOKEN, OWNER, REPO, BRANCH = map(os.getenv, ["GITHUB_TOKEN", "GITHUB_OWNER", "GITHUB_REPO", "GITHUB_BRANCH"])
+TOKEN="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"
+OWNER="G0C001"
+REPO="database"
+BRANCH= "main"
 
 @csrf_exempt
 @require_GET
