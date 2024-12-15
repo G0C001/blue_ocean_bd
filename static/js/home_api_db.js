@@ -85,6 +85,8 @@ function openApiModal(apiBox) {
   }
 }
 `;
+console.log(tokenContent);
+
 
     // Set the content inside the <code> tag
     apiTokenCode.textContent = tokenContent;
