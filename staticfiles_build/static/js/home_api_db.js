@@ -67,17 +67,26 @@ function openApiModal(apiBox) {
     // Get the selected database name from the dropdown in the clicked API box
     const selectedDb = apiBox.querySelector('select').value;
 
-    // Dynamically create the API token content with the selected database name
+
+    function encode(originalString) {
+        let base64 = btoa(originalString);
+        return base64.replace(/=/g, '');
+      }
+      let originalString = `${window.user}/${selectedDb}.db`;
+      let encodedString = encode(originalString);
+
     const tokenContent = `
 {
-  "url": "${window.location.origin}/API/upload_to_github",
+  "url": "${window.location.origin}/API/database",
   "method": "GET",
   "params": {
-    "file_path": "${window.user}/${selectedDb}",
-    "db_query": "Send your database query as a parameter"
+    "token": "${encodedString}",
+    "query": "Send your database query as a parameter"
   }
 }
 `;
+console.log(tokenContent);
+
 
     // Set the content inside the <code> tag
     apiTokenCode.textContent = tokenContent;
