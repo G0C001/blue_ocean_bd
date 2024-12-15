@@ -6,8 +6,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 
-
-load_dotenv()
+load_dotenv(dotenv_path="B:/excel/.env")
+# load_dotenv()
 TOKEN, OWNER, REPO, BRANCH = map(os.getenv, ["GITHUB_TOKEN", "GITHUB_OWNER", "GITHUB_REPO", "GITHUB_BRANCH"])
 
 
@@ -81,6 +81,8 @@ import sqlite3
 import tempfile
 import os
 import requests
+import base64
+
 
 @csrf_exempt
 @require_GET
@@ -122,6 +124,89 @@ def fetch_and_update_db(request):
             connection.commit()
 
             if db_query.strip().lower().startswith("select"):
+                results = cursor.fetchall()
+                columns = [description[0] for description in cursor.description] if cursor.description else []
+                return JsonResponse({"columns": columns, "results": results}, safe=False)
+
+            with open(temp_file_path, "rb") as modified_file:
+                updated_db_content = modified_file.read()
+
+        finally:
+            if connection:
+                connection.close()
+            if temp_file_path and os.path.exists(temp_file_path):
+                os.remove(temp_file_path)
+
+        encoded_content = base64.b64encode(updated_db_content).decode()
+        update_data = {
+            "message": "Update database",
+            "content": encoded_content,
+            "sha": sha,
+        }
+        update_response = requests.put(url, headers=headers, json=update_data)
+
+        if update_response.status_code not in [200, 201]:
+            return JsonResponse(
+                {"error": f"Failed to update database: {update_response.status_code}", "details": update_response.text},
+                status=update_response.status_code,
+            )
+
+        return JsonResponse({"message": "Database updated successfully!"})
+
+    except sqlite3.DatabaseError as db_err:
+        return JsonResponse({"error": f"{str(db_err)}"}, status=400)
+
+
+def database(request):
+    try:
+        if request.method != "GET":
+            return JsonResponse({"error": "Invalid request method. Use GET."}, status=405)
+
+        query = request.GET.get("query")
+        token = request.GET.get("token")
+
+        if not query or not token:
+            return JsonResponse({"error": "Missing 'query' or 'token' parameter"}, status=400)
+        
+
+        padding = "=" * (4 - len(token) % 4)
+        base64_string_with_padding = token + padding
+
+        decoded_bytes = base64.b64decode(base64_string_with_padding)
+        file_path = decoded_bytes.decode("utf-8")
+
+
+
+        
+
+        url = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/BLUE_WHALE_OCEAN/DATABASE/{file_path}"
+        headers = {"Authorization": f"Bearer {TOKEN}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code != 200:
+            return JsonResponse({"error": "Failed to fetch database"}, status=500)
+
+        content = response.json().get("content", "")
+        sha = response.json().get("sha", "")
+        if not content or not sha:
+            return JsonResponse({"error": "Invalid response from GitHub"}, status=500)
+
+        db_data = base64.b64decode(content)
+
+        temp_file_path = None
+        connection = None
+        try:
+            with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+                temp_file.write(db_data)
+                temp_file_path = temp_file.name
+
+            connection = sqlite3.connect(temp_file_path)
+            cursor = connection.cursor()
+            cursor.execute(query)
+
+            connection.commit()
+
+            if query.strip().lower().startswith("select"):
                 results = cursor.fetchall()
                 columns = [description[0] for description in cursor.description] if cursor.description else []
                 return JsonResponse({"columns": columns, "results": results}, safe=False)

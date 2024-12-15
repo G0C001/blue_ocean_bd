@@ -10,4 +10,5 @@ urlpatterns = [
     path('API/upload_to_github', DB_creation.upload_to_github),
     path('API/delect_file_by_user', DB_creation.delect_file_by_user),
     path('API/fetch_and_update_db', DB_creation.fetch_and_update_db),
+    path('API/database', DB_creation.database),
 ]
