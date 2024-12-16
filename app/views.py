@@ -7,7 +7,8 @@ formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 GLOBAL_USERNAME = None
 
 def db(query):
-    url = "http://127.0.0.1:8000/API/database"
+    # url = "http://127.0.0.1:8000/API/database"  # for local server
+    url = "https://bwo-orcin.vercel.app/API/database" #for productions
     params = {
         "token": "QldPL0JXT19NQUlOX1VTRVJTLmRi",
         "query": query
