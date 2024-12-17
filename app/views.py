@@ -6,7 +6,7 @@ current_datetime = datetime.now()
 formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 GLOBAL_USERNAME = None
 
-def db(query):
+def db(query, type):
     # url = "http://127.0.0.1:8000/API/database"  # for local server
     url = "https://bwo-orcin.vercel.app/API/database" #for productions
     params = {
@@ -17,7 +17,8 @@ def db(query):
     if response.status_code != 200:
         return []
     else:
-       return response.json()['results']
+       if type == 'login':
+            return response.json()['results']
 
 
 def register(request):
@@ -30,7 +31,7 @@ def register(request):
             password = request.POST.get('password')
 
             query = f"SELECT * FROM BWO_WEBSITE_USERS WHERE username = '{username}' AND password = '{password}'"
-            result = db(query)
+            result = db(query, "login")
 
             if result != []:
                 GLOBAL_USERNAME = result[0][1]
@@ -44,8 +45,7 @@ def register(request):
 
             query = f"""INSERT INTO BWO_WEBSITE_USERS (username, password, email, created_at) 
                         VALUES ('{username}', '{password}', '{email}', '{formatted_datetime}')"""
-            print(query)
-            db(query)
+            db(query, "signup")
 
     return render(request, 'register.html')
 
