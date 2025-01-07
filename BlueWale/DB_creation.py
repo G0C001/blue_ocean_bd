@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 # load_dotenv(dotenv_path="B:/excel/.env")
 load_dotenv()
 TOKEN, OWNER, REPO, BRANCH = map(os.getenv, ["GITHUB_TOKEN", "GITHUB_OWNER", "GITHUB_REPO", "GITHUB_BRANCH"])
+print(TOKEN)
 
 
 @csrf_exempt

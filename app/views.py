@@ -5,7 +5,12 @@ from datetime import datetime
 current_datetime = datetime.now()
 formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
 GLOBAL_USERNAME = None
-
+from dotenv import load_dotenv
+import os
+load_dotenv(dotenv_path="B:/excel/.env")
+load_dotenv()
+TOKEN, OWNER, REPO, BRANCH = map(os.getenv, ["GITHUB_TOKEN", "GITHUB_OWNER", "GITHUB_REPO", "GITHUB_BRANCH"])
+print(TOKEN)
 def db(query, type):
     # url = "http://127.0.0.1:8000/API/database"  # for local server
     url = "https://bwo-orcin.vercel.app/API/database" #for productions
