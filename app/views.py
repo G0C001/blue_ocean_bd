@@ -13,7 +13,7 @@ TOKEN, OWNER, REPO, BRANCH = map(os.getenv, ["GITHUB_TOKEN", "GITHUB_OWNER", "GI
 print(TOKEN)
 def db(query, type):
     # url = "http://127.0.0.1:8000/API/database"  # for local server
-    url = "https://bwo-orcin.vercel.app/API/database" #for productions    
+    url = "https://bwo-eosin.vercel.app/API/database" #for productions       
     params = {
         "token": "QldPL0JXT19NQUlOX1VTRVJTLmRi",
         "query": query
